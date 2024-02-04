@@ -39,8 +39,14 @@
 #           Unset if TargetType is NONE
 #           tile: int[]
 #               The integer coordinates of the last traversed tile
+#           pos: double[]
+#               The double coordinates of the last traversed tile
 #           point: double[]
 #               Where exactly the ray hits an obstacle within the last traversed tile, as three coordinates between 0 and 1
+#       PlacePosition
+#           Unset if TargetType is NONE
+#           tile: int[]
+#               The integer coordinates of where a block would be placed
 #       Distance: double
 #           How long the ray travels before hitting an obstacle
 #           Unset if TargetType is NONE
@@ -74,6 +80,7 @@ data modify storage iris:output TargetType set value "NONE"
 data remove storage iris:output TargetedBlock
 data remove storage iris:output TargetedEntity
 data remove storage iris:output TargetPosition
+data remove storage iris:output PlacePosition
 data remove storage iris:output Distance
 data remove storage iris:output TargetedBox
 data remove storage iris:output TargetedFace
