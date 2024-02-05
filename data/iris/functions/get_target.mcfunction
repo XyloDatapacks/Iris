@@ -14,14 +14,18 @@
 #       MaxRecursionDepth: int
 #           How many blocks to traverse before giving up
 #           Defaults to 16
+#       MaxDistance: double (optional, autoresets)
+#           Max distance traveled by the ray
 #       Blacklist: string
 #           A block or a block tag to ignore
 #           Defaults to "#iris:shape_groups/air"
 #           Should be reset if unused, not set to an empty string
-#       Whitelist: string
+#       Whitelist: string 
 #           A block or a block tag to look for (all other blocks are ignored)
 #           Unset by default
 #           Should be reset if unused, not set to an empty string
+#       OverrideExecutingEntity: byte (optional, autoresets)
+#           If set to 1b does not add iris.executing tag to executing entity
 # @writes
 #   storage iris:output
 #       TargetType: string
@@ -31,9 +35,12 @@
 #           The integer coordinates of the block that is hit
 #           Corresponds to the "Targeted Block" field in the debug screen
 #           Unset if TargetType is not BLOCK
-#       TargetedEntity: int
-#           The ID of the targeted entity on objective iris.entity_id
-#           The entity executing this function cannot be targeted
+#       TargetedEntity
+#           UUID: int[]
+#               Entity's uuid
+#           id: int
+#               The ID of the targeted entity on objective iris.entity_id
+#               The entity executing this function cannot be targeted
 #           Unset if TargetType is not ENTITY
 #       TargetPosition
 #           Unset if TargetType is NONE
@@ -94,6 +101,10 @@ scoreboard players set $total_distance iris 0
 execute summon minecraft:marker run function iris:get_position/main
 
 # Start the loop
-tag @s add iris.executing
+execute unless data storage iris:settings {OverrideExecutingEntity:1b} run tag @s add iris.executing
+data remove storage iris:settings OverrideExecutingEntity
 execute store result score $max_depth iris run data get storage iris:settings MaxRecursionDepth
+execute store result score $max_distance iris run data get storage iris:settings MaxDistance 1000000
+execute if score $max_distance iris matches ..0 run scoreboard players set $max_distance iris 2147483647
+data remove storage iris:settings MaxDistance
 return run function iris:raycast/loop

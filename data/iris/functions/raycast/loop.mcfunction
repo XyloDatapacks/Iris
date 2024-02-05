@@ -20,6 +20,8 @@ scoreboard players operation $total_distance iris += $to_next_block iris
 scoreboard players add $depth iris 1
 execute if score $depth iris = $max_depth iris run tag @s remove iris.executing
 execute if score $depth iris = $max_depth iris run return fail
+execute if score $total_distance iris > $max_distance iris run tag @s remove iris.executing
+execute if score $total_distance iris > $max_distance iris run return fail
 
 # Otherwise, loop this function at the next block
 execute if data storage iris:data {NextCoordinateChange: "x"} if score $dx iris matches 0.. positioned ~1 ~ ~ run return run function iris:raycast/loop
@@ -28,4 +30,4 @@ execute if data storage iris:data {NextCoordinateChange: "y"} if score $dy iris 
 execute if data storage iris:data {NextCoordinateChange: "y"} if score $dy iris matches ..-1 positioned ~ ~-1 ~ run return run function iris:raycast/loop
 execute if data storage iris:data {NextCoordinateChange: "z"} if score $dz iris matches 0.. positioned ~ ~ ~1 run return run function iris:raycast/loop
 execute if data storage iris:data {NextCoordinateChange: "z"} if score $dz iris matches ..-1 positioned ~ ~ ~-1 run return run function iris:raycast/loop
-execute if score $depth iris < $max_depth iris at @s run return run function iris:raycast/loop
+execute if score $depth iris < $max_depth iris if score $total_distance iris < $max_distance iris at @s run return run function iris:raycast/loop

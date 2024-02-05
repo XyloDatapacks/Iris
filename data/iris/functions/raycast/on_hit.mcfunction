@@ -6,6 +6,8 @@
 # @private
 # @within iris:raycast/loop
 
+tag @s remove iris.executing
+
 # Write target type (one of BLOCK, ENTITY)
 execute if score $block_hit iris matches 1 if score $entity_hit iris matches 0 run data modify storage iris:output TargetType set value "BLOCK"
 execute if score $entity_hit iris matches 1 if score $block_hit iris matches 0 run data modify storage iris:output TargetType set value "ENTITY"
@@ -20,11 +22,11 @@ execute if data storage iris:output {TargetType: "BLOCK"} store result storage i
 execute if data storage iris:output {TargetType: "BLOCK"} align xyz run summon minecraft:marker ~0.5 ~0.5 ~0.5 {Tags: ["iris", "iris.targeted_block"]}
 
 # Write targeted entity
-execute if data storage iris:output {TargetType: "ENTITY"} run data modify storage iris:output TargetedEntity set from storage iris:data TargetedBox.entity_id
+execute if data storage iris:output {TargetType: "ENTITY"} run data modify storage iris:output TargetedEntity.id set from storage iris:data TargetedBox.entity_id
 execute if data storage iris:output {TargetType: "ENTITY"} run data remove storage iris:data TargetedBox.entity_id
 execute if data storage iris:output {TargetType: "ENTITY"} run data remove storage iris:data TargetedFace.entity_id
-execute if data storage iris:output {TargetType: "ENTITY"} store result score $entity_id iris run data get storage iris:output TargetedEntity
-execute if data storage iris:output {TargetType: "ENTITY"} as @e[tag=iris.possible_target] if score @s iris.id = $entity_id iris run tag @s add iris.targeted_entity
+execute if data storage iris:output {TargetType: "ENTITY"} store result score $entity_id iris run data get storage iris:output TargetedEntity.id
+execute if data storage iris:output {TargetType: "ENTITY"} as @e[tag=iris.possible_target] if score @s iris.id = $entity_id iris run function iris:raycast/_on_hit_register_entity
 execute if data storage iris:output {TargetType: "ENTITY"} run tag @e remove iris.possible_target
 
 # Write target position
