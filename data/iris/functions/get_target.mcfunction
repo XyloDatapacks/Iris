@@ -24,8 +24,13 @@
 #           A block or a block tag to look for (all other blocks are ignored)
 #           Unset by default
 #           Should be reset if unused, not set to an empty string
+#       EntityHitboxTollerance: double (optional, autoresets)
+#           Expand all entities hitbox by that value
 #       OverrideExecutingEntity: byte (optional, autoresets)
 #           If set to 1b does not add iris.executing tag to executing entity
+#       OverrideRotation: byte (optional, autoresets)
+#           overrides the direction vector with one already set (with absolute value 1000000)
+#           $override_dx iris, $override_dy iris, $override_dz iris
 # @writes
 #   storage iris:output
 #       TargetType: string
@@ -99,6 +104,7 @@ scoreboard players set $total_distance iris 0
 
 # Get initial position/rotation
 execute summon minecraft:marker run function iris:get_position/main
+data remove storage iris:settings OverrideRotation
 
 # Start the loop
 execute unless data storage iris:settings {OverrideExecutingEntity:1b} run tag @s add iris.executing

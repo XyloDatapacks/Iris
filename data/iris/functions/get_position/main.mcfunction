@@ -28,4 +28,6 @@
 #        The z coordinate of the steering vector of the ray, represented by an integer between -1000000 and 1000000
 
 function iris:get_position/get_coordinates
-function iris:get_position/get_rotation
+execute unless data storage iris:settings {OverrideRotation:1b} run function iris:get_position/get_rotation
+execute if data storage iris:settings {OverrideRotation:1b} run function iris:get_position/override_rotation
+
