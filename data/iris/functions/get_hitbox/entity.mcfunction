@@ -44,6 +44,10 @@ scoreboard players operation $entity_dz iris -= $[z] iris
 scoreboard players operation $entity_dz iris *= $1000000 iris
 scoreboard players operation $entity_dz iris += $entity_{z} iris
 
+# apply tollerance to bounding box
+scoreboard players operation $entity_half_width iris += $entity_hitbox_tollerance iris
+scoreboard players operation $entity_height iris += $entity_hitbox_tollerance iris
+
 # Get the coordinates of the bounding box
 scoreboard players operation $entity_x0 iris = $entity_dx iris
 scoreboard players operation $entity_x0 iris -= $entity_half_width iris

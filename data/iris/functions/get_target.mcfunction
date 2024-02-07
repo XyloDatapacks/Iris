@@ -97,6 +97,11 @@ data remove storage iris:output Distance
 data remove storage iris:output TargetedBox
 data remove storage iris:output TargetedFace
 
+execute store result score $entity_hitbox_tollerance iris run data get storage iris:settings EntityHitboxTollerance 1000000
+execute if score $entity_hitbox_tollerance iris matches ..0 run scoreboard players set $entity_hitbox_tollerance iris 0
+execute if score $entity_hitbox_tollerance iris matches 1000000.. run scoreboard players set $entity_hitbox_tollerance iris 1000000
+data remove storage iris:settings EntityHitboxTollerance
+
 scoreboard players set $depth iris 0
 scoreboard players set $min_distance iris 2147483647
 scoreboard players set $max_entity_id iris 0
