@@ -5,6 +5,10 @@
         "minecraft:frog",
         "minecraft:interaction",
         "minecraft:sniffer",
-        "minecraft:warden"
+        "minecraft:warden",
+        {
+            "id": "minecraft:armadillo",
+            "required": false
+        }
     ]
 }
